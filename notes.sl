@@ -69,3 +69,9 @@
 
 +   run server with:
     `npm run dev`
+
+
+*** MISC DEPENDENCY ***
+
++   for page navigation.
+    `npm i react-router-dom`
