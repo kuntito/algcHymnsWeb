@@ -1,0 +1,30 @@
+import { Hymn } from "../../../../models/hymn"
+import ItemList from "../../../util/AppItemList"
+import LiHymn from "./LiHymn";
+
+interface Props {
+    hymns: Hymn[];
+}
+
+const ListHymn = ({
+    hymns
+}: Props) => {
+    return (
+        <ItemList
+            data={hymns}
+            renderItem={(item, idx) => (
+                <LiHymn 
+                    index={idx}
+                    hymn={item}
+                />
+            )}
+            gap="16px"
+            edgePadding={8}
+            // TODO, this the same size as the search bar
+            // don't hard code, pass same ref to both.
+            maxW={"444px"}
+        />
+    )
+}
+
+export default ListHymn

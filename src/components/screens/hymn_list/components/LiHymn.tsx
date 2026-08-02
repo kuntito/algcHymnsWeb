@@ -21,10 +21,10 @@ const LiHymn = ({
             borderRadius={"16px"}
             cursor={"pointer"}
             _hover={{
-                opacity: 0.9
+                opacity: 0.7
             }}
             _active={{
-                opacity: 0.6
+                opacity: 0.5
             }}
             transition="opacity 0.2s ease"
             boxShadow="0px 4px 12px rgba(0,0,0,0.2)"

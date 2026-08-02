@@ -70,3 +70,21 @@ export const dummyHymn: Hymn = {
     ]
 };
 
+
+export const listDummyHymns: Hymn[] = [
+    { id: 1, title: "Above All Power", updatedAt: new Date(), verses: [] },
+    { id: 2, title: "Great Is Thy Faithfulness", updatedAt: new Date(), verses: [] },
+    { id: 3, title: "Amazing Grace", updatedAt: new Date(), verses: [] },
+    { id: 4, title: "How Great Thou Art", updatedAt: new Date(), verses: [] },
+    { id: 5, title: "It Is Well With My Soul", updatedAt: new Date(), verses: [] },
+    { id: 6, title: "Blessed Assurance", updatedAt: new Date(), verses: [] },
+    { id: 7, title: "Holy Holy Holy", updatedAt: new Date(), verses: [] },
+    { id: 8, title: "Be Thou My Vision", updatedAt: new Date(), verses: [] },
+    { id: 9, title: "Crown Him With Many Crowns", updatedAt: new Date(), verses: [] },
+    { id: 10, title: "To God Be The Glory", updatedAt: new Date(), verses: [] },
+    { id: 11, title: "Come Thou Fount", updatedAt: new Date(), verses: [] },
+    { id: 12, title: "And Can It Be", updatedAt: new Date(), verses: [] },
+    { id: 13, title: "Immortal Invisible", updatedAt: new Date(), verses: [] },
+    { id: 14, title: "All Hail The Power", updatedAt: new Date(), verses: [] },
+    { id: 15, title: "Fairest Lord Jesus", updatedAt: new Date(), verses: [] },
+];
