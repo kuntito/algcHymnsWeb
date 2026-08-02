@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import HymnListScreen from "./components/screens/HymnListScreen";
+import HymnListScreen from "./components/screens/hymn_list/HymnListScreen";
 import AppFrame from "./components/util/AppFrame";
 import AddHymnScreen from "./components/screens/AddHymnScreen";
 

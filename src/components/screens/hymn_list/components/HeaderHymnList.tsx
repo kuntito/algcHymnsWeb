@@ -5,7 +5,7 @@ import { Box, HStack } from "@chakra-ui/react";
 import OutlineButton from "../../../OutlineButton";
 import { AddIcon } from "../../../appIcons/AddIcon";
 
-const ContentHymnListHeader = () => {
+const HeaderHymnList = () => {
     // TODO should probably be in zustand slice
     const [query, setQuery] = useState("");
     const onClear = () => {
@@ -19,7 +19,6 @@ const ContentHymnListHeader = () => {
             <HStack
                 w={"100%"}
                 h={"100%"}
-                border={"1px solid red"}
                 justifyContent={"center"}
                 gap={"16px"}
             >
@@ -48,4 +47,4 @@ const ContentHymnListHeader = () => {
     )
 }
 
-export default ContentHymnListHeader
+export default HeaderHymnList
