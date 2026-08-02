@@ -15,15 +15,34 @@ const colors = {
     }
 }
 
-const fontSizes = {
-    blaze: "24px",
-    modu: "16px",
-    hush: "12px",
+const textStyles = {
+    blaze: {
+        fontSize: "24px",
+        fontWeight: "normal",
+    },
+    orion: {
+        fontSize: "16px",
+        fontWeight: "normal",
+    },
+    hush: {
+        fontSize: "12px",
+        fontWeight: "normal",
+    },
+    tiny: {
+        fontSize: "8px",
+        fontWeight: "normal",
+    },
+    mono: {
+        fontSize: "10px",
+        fontWeight: "normal",
+        fontFamily: "monospace"
+    }
 }
+
 
 const appTheme = extendTheme({
     colors,
-    fontSizes,
+    textStyles,
     styles: {
         global: {
             body: {

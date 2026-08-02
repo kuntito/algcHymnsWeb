@@ -23,7 +23,7 @@ const AppFrame = () => {
             >
                 <Image 
                     src='algc_logo.png'
-                    opacity={0.1}
+                    opacity={0.05}
                     boxSize={"200px"}
                 />
 
