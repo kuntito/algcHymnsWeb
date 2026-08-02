@@ -1,0 +1,53 @@
+import { Center, Divider, HStack, Text } from "@chakra-ui/react"
+import { Hymn } from "../../../../models/hymn";
+
+interface Props {
+    index: number;
+    hymn: Hymn;
+}
+
+const LiHymn = ({
+    index,
+    hymn
+}: Props) => {
+    const indexStr = `${index < 10 ? `0${index}` : index}`
+
+    return (
+        <HStack
+            alignItems={"center"}
+            w={"100%"}
+            bg={"palette.iju"}
+            padding={"8px"}
+            borderRadius={"16px"}
+            cursor={"pointer"}
+            _hover={{
+                opacity: 0.9
+            }}
+            _active={{
+                opacity: 0.6
+            }}
+            transition="opacity 0.2s ease"
+            boxShadow="0px 4px 12px rgba(0,0,0,0.2)"
+        >
+            <Center
+                w={"26px"}
+                >
+                <Text>
+                    {indexStr}
+                </Text>
+            </Center>
+            <Divider 
+                orientation="vertical"
+                height={"12px"}
+                color={"palette.holyAlpha"}
+                />
+            <Text
+                flex={1}
+            >
+                {hymn.title}
+            </Text>
+        </HStack>
+    )
+}
+
+export default LiHymn
