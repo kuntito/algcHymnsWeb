@@ -7,6 +7,7 @@ const colors = {
         creed: "#00003F",
         life: "#FFFFFF",
         holy: "#B4CBED",
+        holyAlpha: "#B4CBED40", // 40 is 25% opacity
         worship: "#00BBF0",
         testimony: "#AABDC7",
         dim: "#424242",
