@@ -38,7 +38,7 @@ const HeaderHymnList = () => {
                     onClear={onClear}
                 />
                 <OutlineButton 
-                    icon={<AddIcon />}
+                    icon={<AddIcon boxSize={"12px"} />}
                     text={buttonText} 
                     onClick={() => { }} 
                 />

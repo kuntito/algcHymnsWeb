@@ -13,7 +13,8 @@ const ListHymn = ({
         <ItemList
             data={hymns}
             renderItem={(item, idx) => (
-                <LiHymn 
+                <LiHymn
+                    key={idx}
                     index={idx}
                     hymn={item}
                 />
