@@ -3,12 +3,14 @@ import { Hymn } from "../../../../models/hymn";
 
 interface Props {
     index: number;
-    hymn: Hymn;
+   hymn: Hymn;
+   onClick: () => void;
 }
 
 const LiHymn = ({
     index,
-    hymn
+    hymn,
+    onClick,
 }: Props) => {
     const indexStr = `${index < 10 ? `0${index}` : index}`
 
@@ -28,6 +30,7 @@ const LiHymn = ({
             }}
             transition="opacity 0.2s ease"
             boxShadow="0px 4px 12px rgba(0,0,0,0.2)"
+            onClick={onClick}
         >
             <Center
                 w={"26px"}

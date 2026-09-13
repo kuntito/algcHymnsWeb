@@ -7,16 +7,13 @@ import HeaderHymnList from "./components/HeaderHymnList"
 import ListHymn from "./components/ListHymn"
 
 const HymnListScreen = () => {
-    // TODO replace with zustand hymns
     const stateHymnFetch = useAppStore(s => s.fetchHymnsState);
     const fetchHymns = useAppStore(s => s.fetchHymns);
+    const refetchHymns = useAppStore(s => s.refetchHymns);
 
     useEffect(() => {
         fetchHymns();
     }, [])
-
-
-    // TODO check devtools, some column doesn't have unique keys on items.
 
     const renderContent = () => {
         switch(stateHymnFetch.kind) {
@@ -27,13 +24,13 @@ const HymnListScreen = () => {
             case 'error':
                 return (
                     <RetryAction
-                        action={fetchHymns}
+                        action={refetchHymns}
                     />
                 );
             case 'success':
                 return (
                     <Box
-                        h={"100%"}
+                        flex={1}
                         w={"100%"}
                         overflowY={"auto"}
                         sx={{

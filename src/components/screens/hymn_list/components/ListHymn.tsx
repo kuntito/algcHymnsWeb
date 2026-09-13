@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Hymn } from "../../../../models/hymn"
 import ItemList from "../../../util/AppItemList"
 import LiHymn from "./LiHymn";
@@ -9,6 +10,8 @@ interface Props {
 const ListHymn = ({
     hymns
 }: Props) => {
+    const navigate = useNavigate();
+
     return (
         <ItemList
             data={hymns}
@@ -17,6 +20,9 @@ const ListHymn = ({
                     key={idx}
                     index={idx}
                     hymn={item}
+                    onClick={
+                        () => navigate(`/view/${item.id}`)
+                    }
                 />
             )}
             gap="16px"

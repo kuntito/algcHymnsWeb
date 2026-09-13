@@ -28,6 +28,8 @@ const OutlineButton = ({
             _hover={{ opacity: 0.6 }}
             _active={{ opacity: 0.4 }}
             onClick={onClick}
+            alignItems={"center"}
+            justifyContent={"center"}
         >
             {icon}
             <Text

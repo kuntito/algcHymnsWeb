@@ -13,15 +13,16 @@ const FrameAppHeader = ({
             w={"100%"}
             h={"64px"}
             gap={0}
-            >
-            <Box
-                flex={1}
+        >
+            <HStack
                 w={"100%"}
+                flex={1}
+                gap={"16px"}
                 px={"24px"}
+                alignItems={"center"}
             >
-
                 {children}
-            </Box>
+            </HStack>
             <Divider
                 borderColor={"palette.holyAlpha"}
             />

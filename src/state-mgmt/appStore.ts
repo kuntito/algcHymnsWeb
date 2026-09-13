@@ -16,12 +16,16 @@ type FetchHymnsState =
 interface appStore {
     fetchHymnsState: FetchHymnsState;
     fetchHymns: () => Promise<void>;
+    refetchHymns: () => Promise<void>;
 }
 
 const useAppStore = create<appStore>((set, get) => {
     const defaultFetchHymnsState: FetchHymnsState = { kind: "idle" }
 
     const getHymns = async () => {
+        const current = get().fetchHymnsState;
+        if (current.kind === "success") return;
+
         set({
             fetchHymnsState: {
                 kind: 'fetching'
@@ -48,9 +52,16 @@ const useAppStore = create<appStore>((set, get) => {
 
     }
 
+
+    const refetchHymns = async () => {
+        set({ fetchHymnsState: {kind: 'idle'}});
+        getHymns();
+    }
+
     return {
         fetchHymnsState: defaultFetchHymnsState,
         fetchHymns: getHymns,
+        refetchHymns: refetchHymns,
     }
 });
 
