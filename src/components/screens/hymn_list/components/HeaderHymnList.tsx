@@ -6,6 +6,7 @@ import OutlineButton from "../../../OutlineButton";
 import { AddIcon } from "../../../appIcons/AddIcon";
 
 const HeaderHymnList = () => {
+    // TODO start here, impl hymn search
     // TODO should probably be in zustand slice
     const [query, setQuery] = useState("");
     const onClear = () => {

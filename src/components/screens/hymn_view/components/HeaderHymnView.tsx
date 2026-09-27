@@ -6,13 +6,16 @@ import EllipsisText from "../../../util/EllipsisText";
 import { LeftChevronIcon } from "../../../appIcons/LeftChevronIcon";
 import AppIconButton from "../../../util/AppIconButton";
 import { useNavigate, useParams } from "react-router-dom";
+import { EditIcon } from "../../../appIcons/EditIcon";
 
 interface Props {
     hymnTitle: string;
+    isEditing: boolean;
 }
 
 const HeaderHymnView = ({
     hymnTitle,
+    isEditing,
 }: Props) => {
     const navigateTo = useNavigate();
     const iconSize = "24px";
@@ -39,12 +42,23 @@ const HeaderHymnView = ({
                     {hymnTitle}
                 </EllipsisText>
             </HStack>
-            {/* TODO cant save hymn unless edited. */}
-            <OutlineButton 
-                icon={<SaveIcon boxSize={"16px"} />}
-                text={"save"} 
-                onClick={() => { }} 
-            />
+            {
+                isEditing ? (
+                    // TODO cant save hymn unless edited.
+                    <OutlineButton 
+                        icon={<SaveIcon boxSize={"16px"} />}
+                        text={"save"} 
+                        onClick={() => { }} 
+                    />
+                ) : (
+                    <OutlineButton 
+                        icon={<EditIcon boxSize={"16px"} />}
+                        text={"edit"} 
+                        onClick={() => { }} 
+                    />
+                    
+                )
+            }
         </FrameAppHeader>
     )
 }
