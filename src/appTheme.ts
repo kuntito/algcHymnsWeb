@@ -13,6 +13,7 @@ const colors = {
         dim: "#424242",
         debit: "#FD5273",
         raze: "#68B439",
+        mover: "#22EB84",
     }
 }
 

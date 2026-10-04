@@ -5,13 +5,18 @@ import { Box, HStack } from "@chakra-ui/react";
 import OutlineButton from "../../../OutlineButton";
 import { AddIcon } from "../../../appIcons/AddIcon";
 
-const HeaderHymnList = () => {
-    // TODO start here, impl hymn search
-    // TODO should probably be in zustand slice
-    const [query, setQuery] = useState("");
-    const onClear = () => {
-        setQuery("");
-    }
+type Props = {
+    query: string;
+    onQueryChange: (q: string) => void;
+    onClear: () => void;
+};
+
+const HeaderHymnList = ({
+    query,
+    onQueryChange,
+    onClear,
+}: Props) => {
+
 
     const buttonText = "add hymn";
     
@@ -35,8 +40,9 @@ const HeaderHymnList = () => {
                 </Box>
                 <AppSearchBar 
                     query={query}
-                    onQueryChange={setQuery}
+                    onQueryChange={onQueryChange}
                     onClear={onClear}
+                    placeholder="search by title or lyrics"
                 />
                 <OutlineButton 
                     icon={<AddIcon boxSize={"12px"} />}

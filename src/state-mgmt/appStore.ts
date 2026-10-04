@@ -17,14 +17,22 @@ interface appStore {
     fetchHymnsState: FetchHymnsState;
     fetchHymns: () => Promise<void>;
     refetchHymns: () => Promise<void>;
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
+    clearSearchQuery: () => void;
 }
 
 const useAppStore = create<appStore>((set, get) => {
     const defaultFetchHymnsState: FetchHymnsState = { kind: "idle" }
 
     const getHymns = async () => {
+        
         const current = get().fetchHymnsState;
-        if (current.kind === "success") return;
+        
+        const isAlreadyLoaded = current.kind === "success";
+        const isAlreadyFetching = current.kind === "fetching";
+
+        if (isAlreadyLoaded || isAlreadyFetching) return;
 
         set({
             fetchHymnsState: {
@@ -52,16 +60,30 @@ const useAppStore = create<appStore>((set, get) => {
 
     }
 
-
     const refetchHymns = async () => {
-        set({ fetchHymnsState: {kind: 'idle'}});
-        getHymns();
+        set({ fetchHymnsState: defaultFetchHymnsState});
+        await getHymns();
     }
+
+    const defaultSearchQuery = "";
+
+    const setSearchQuery = (query: string) => {
+        set({ searchQuery: query });
+    }
+
+    const clearSearchQuery = () => {
+        set({ searchQuery: defaultSearchQuery });
+    }
+
+
 
     return {
         fetchHymnsState: defaultFetchHymnsState,
         fetchHymns: getHymns,
         refetchHymns: refetchHymns,
+        searchQuery: defaultSearchQuery,
+        setSearchQuery,
+        clearSearchQuery,
     }
 });
 

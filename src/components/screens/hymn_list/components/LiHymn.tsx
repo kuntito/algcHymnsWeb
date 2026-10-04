@@ -1,18 +1,23 @@
-import { Center, Divider, HStack, Text } from "@chakra-ui/react"
+import { Center, Divider, HStack, Text, VStack } from "@chakra-ui/react"
 import { Hymn } from "../../../../models/hymn";
+import { HymnMatchSource } from "../../../../util";
 
 interface Props {
-    index: number;
-   hymn: Hymn;
-   onClick: () => void;
+    noInList: number;
+    hymn: Hymn;
+    onClick: () => void;
+    matchSource?: HymnMatchSource;
 }
 
 const LiHymn = ({
-    index,
+    noInList,
     hymn,
     onClick,
+    matchSource,
 }: Props) => {
-    const indexStr = `${index < 10 ? `0${index}` : index}`
+    const indexStr = `${noInList < 10 ? `0${noInList}` : noInList}`
+
+    const isLyricsMatch = matchSource === "lyrics";
 
     return (
         <HStack
@@ -44,11 +49,30 @@ const LiHymn = ({
                 height={"12px"}
                 color={"palette.holyAlpha"}
                 />
-            <Text
+            <VStack
+                alignItems={"start"}
                 flex={1}
+                gap={0}
             >
-                {hymn.title}
-            </Text>
+                <Text
+                    lineHeight={1.2}
+                    >
+                    {hymn.title}
+                </Text>
+                {isLyricsMatch && (
+                    <Text
+                        textStyle={"hush"}
+                        fontStyle={"italic"}
+                        fontSize={"10px"}
+                        fontWeight={"thin"}
+                        letterSpacing={"widest"}
+                        color={"palette.mover"}
+                        lineHeight={1.2}                        
+                    >
+                        matching lyrics
+                    </Text>
+                )}
+            </VStack>
         </HStack>
     )
 }

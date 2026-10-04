@@ -7,12 +7,14 @@ interface Props {
     query: string;
     onQueryChange: (q: string) => void;
     onClear: () => void;
+    placeholder?: string;
 }
 
 const AppSearchBar = ({
     query,
     onQueryChange,
-    onClear
+    onClear,
+    placeholder,
 }: Props) => {
 
     const iconColor = "palette.dim";
@@ -38,6 +40,10 @@ const AppSearchBar = ({
                 onChange={handleQueryChange}
                 variant={"unstyled"}
                 color={"palette.creed"}
+                placeholder={placeholder}
+                _placeholder={{
+                    color: "palette.dim"
+                }}
             />
             <Center
                 boxSize={"24px"}

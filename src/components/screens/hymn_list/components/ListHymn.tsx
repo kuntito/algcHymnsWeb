@@ -2,10 +2,14 @@ import { useNavigate } from "react-router-dom";
 import { Hymn } from "../../../../models/hymn"
 import ItemList from "../../../util/AppItemList"
 import LiHymn from "./LiHymn";
+import { HymnMatchSource, SearchedHymn } from "../../../../util";
+
+type ListableHymn = Hymn & Partial<Pick<SearchedHymn, "matchSource">>;
 
 interface Props {
-    hymns: Hymn[];
+    hymns: ListableHymn[];
 }
+
 
 const ListHymn = ({
     hymns
@@ -17,9 +21,10 @@ const ListHymn = ({
             data={hymns}
             renderItem={(item, idx) => (
                 <LiHymn
-                    key={idx}
-                    index={idx}
+                    key={item.id}
+                    noInList={idx + 1}
                     hymn={item}
+                    matchSource={item.matchSource}
                     onClick={
                         () => navigate(`/view/${item.id}`)
                     }
