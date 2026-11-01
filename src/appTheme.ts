@@ -9,6 +9,7 @@ const colors = {
         holy: "#B4CBED",
         holyAlpha: "#B4CBED40", // 40 is 25% opacity
         worship: "#00BBF0",
+        worshipAlpha: "#00BBF099", // 99 is 60% opacity
         testimony: "#AABDC7",
         dim: "#424242",
         debit: "#FD5273",

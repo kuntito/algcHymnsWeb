@@ -40,6 +40,7 @@ const OutlineButton = ({
             onClick={onClick}
             alignItems={"center"}
             justifyContent={"center"}
+            minW={"100px"}
             {...stackProps}
         >
             {icon}

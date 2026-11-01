@@ -1,38 +1,41 @@
-import { Box, VStack } from "@chakra-ui/react";
-import { ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
-import HeaderAddHymn from "./components/HeaderAddHymn";
+import { VStack } from "@chakra-ui/react";
 import { useHymnDraft } from "../../../hooks/useHymnDraft";
+import HeaderAddHymn from "./components/HeaderAddHymn";
+import HymnEditLyrics from "./HymnEditLyrics";
 
 const AddHymnScreen = () => {
 
     const {
         hymnDraft,
-        updateHymnDraft,
         isDraftValid,
+        updateHymnTitle,
+        addVerse,
+        addChorus,
+        updateVerse,
+        deleteVerse,
     } = useHymnDraft();
-    
-    const renderContent = (
-
-    ): ReactNode => {
-        // switch() {
-            
-        // }
-        return null;
-    }
     
     
     return (
         <VStack
             w={"100%"}
             h={"100%"}
+            overflow={"hidden"}
         >
             <HeaderAddHymn 
                 hymnTitle={hymnDraft.title}
-                onHymnTitleChange={updateHymnDraft("title")}
+                onHymnTitleChange={updateHymnTitle}
                 canSaveHymn={isDraftValid}
             />
-            {renderContent()}
+            <HymnEditLyrics
+                hymnDraft={hymnDraft}
+                onVerseTextChange={updateVerse}
+                onDeleteVerse={deleteVerse}
+                onAddChorus={addChorus}
+                onAddVerse={addVerse}
+                flex={1}
+                minH={0}
+            />
         </VStack>
     )
 }

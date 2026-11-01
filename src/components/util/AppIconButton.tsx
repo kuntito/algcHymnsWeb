@@ -5,7 +5,7 @@ interface Props {
     icon: ReactElement;
     iconColor: string;
     iconColorWhenHovered?: string;
-    onClick: () => void;
+    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { HymnDraft } from "./useHymnDraft.types";
-import { validateHymnDraft } from "./useHymnDraft.helpers";
+import { createVerseDraft, validateHymnDraft } from "./useHymnDraft.helpers";
+import { VerseType } from "../api/getHymns.types";
 
 
 const emptyHymnDraft: HymnDraft = {
@@ -14,22 +15,86 @@ export const useHymnDraft = (
 ) => {
     const [hymnDraft, setHymnDraft] = useState<HymnDraft>(initialDraft);
 
-    const updateHymnDraft = <K extends keyof HymnDraft>(
-        field: K
-    ) => (
-        value: HymnDraft[K]
+    const isDraftValid = validateHymnDraft(hymnDraft);
+
+
+    const updateHymnTitle = (
+        newTitle: string
     ) => {
         setHymnDraft(prev => ({
             ...prev,
-            [field]: value
+            title: newTitle
         }));
     }
 
-    const isDraftValid = validateHymnDraft(hymnDraft);
+    const appendVerseDraft = (
+        verseType: VerseType
+    ) => {
+        const newVerseDraft = createVerseDraft(verseType);
+
+        setHymnDraft(prev => ({
+            ...prev,
+            verses: [...prev.verses, newVerseDraft]
+        }));
+    }
+
+    const addVerse = () => {
+        appendVerseDraft("verse");
+    }
+
+    const addChorus = () => {
+        appendVerseDraft("chorus");
+    }
+
+
+    const updateVerse = (
+        draftId: string,
+        newText: string,
+    ) => {
+        setHymnDraft(prev => {
+            const updatedVerseDrafts = prev.verses.map(verseDraft => {
+                const isTarget = verseDraft.draftId === draftId;
+
+                if (isTarget) { 
+                    return { 
+                        ...verseDraft,
+                        text: newText
+                    };
+                }
+                
+                return verseDraft;
+
+            });
+
+            return {
+                ...prev,
+                verses: updatedVerseDrafts 
+            };
+        });
+    }
+
+    const deleteVerse = (
+        draftId: string
+    ) => {
+        setHymnDraft(prev => {
+            const remainingVerseDrafts = prev.verses.filter(
+                verse => verse.draftId !== draftId
+            );
+
+            return {
+                ...prev,
+                verses: remainingVerseDrafts
+            };
+        });
+    }
 
     return {
         hymnDraft,
-        updateHymnDraft,
         isDraftValid,
+        addVerse,
+        addChorus,
+        updateHymnTitle,
+        updateVerse,
+        deleteVerse,
     };
 };

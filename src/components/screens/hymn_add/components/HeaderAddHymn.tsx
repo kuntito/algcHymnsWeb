@@ -42,6 +42,7 @@ const HeaderAddHymn = ({
                         onClick={() => navigateTo("/")}
                     />
                 </HStack>
+                {/* TODO guard typing unaccepted characeters and toast where necessary same way you did for the yc26 app */}
                 <Flex
                     minW={"500px"}
                     justifyContent={"center"}

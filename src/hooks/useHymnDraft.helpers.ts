@@ -1,3 +1,4 @@
+import { VerseType } from "../api/getHymns.types";
 import { HymnDraft, HymnVerseDraft } from "./useHymnDraft.types";
 
 const validateHymnTitle = (
@@ -28,4 +29,15 @@ export const validateHymnDraft = (
     const areVersesValid = validateHymnVerses(hymnDraft.verses);
 
     return isTitleValid && areVersesValid;
+};
+
+
+export const createVerseDraft = (
+    verseType: VerseType
+): HymnVerseDraft => {
+    return {
+        draftId: crypto.randomUUID(),
+        verseType,
+        text: "",
+    };
 };
