@@ -83,3 +83,23 @@ export const searchHymns = (
         ...lyricsOnlyMatches
     ];
 }
+
+
+/**
+ * removes extra spaces from a string.
+ *
+ * trims spaces from both ends, and reduces any run of
+ * consecutive spaces in the middle to a single space.
+ *
+ * e.g. "  moo   farms " becomes "moo farms".
+ */
+export const removeExtraSpaces = (
+    text: string
+): string => {
+    return text
+        .trim()
+        .replace(
+            /\s{2,}/g,
+            " "
+        );
+}
