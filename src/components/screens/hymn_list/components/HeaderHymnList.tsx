@@ -33,27 +33,30 @@ const HeaderHymnList = ({
                 justifyContent={"center"}
                 gap={"16px"}
             >
-                {/* placeholder to balance the right icon */}
-                <Box
-                    visibility={"hidden"}
+                <HStack
+                    flex={1}
+                    justifyContent={"start"}
+                    gap={"16px"}
                 >
-                    <OutlineButton 
-                        icon={<AddIcon />}
-                        text={buttonText} 
-                        onClick={() => {}} 
-                    />
-                </Box>
+                    
+                </HStack>
                 <AppSearchBar 
                     query={query}
                     onQueryChange={onQueryChange}
                     onClear={onClear}
                     placeholder="search by title or lyrics"
                 />
-                <OutlineButton 
-                    icon={<AddIcon boxSize={"12px"} />}
-                    text={buttonText} 
-                    onClick={goToAddHymnScreen} 
-                />
+                <HStack
+                    flex={1}
+                    justifyContent={"end"}
+                    gap={"16px"}
+                >
+                    <OutlineButton 
+                        icon={<AddIcon boxSize={"12px"} />}
+                        text={buttonText} 
+                        onClick={goToAddHymnScreen} 
+                    />
+                </HStack>
             </HStack>
         </FrameAppHeader>
     )
