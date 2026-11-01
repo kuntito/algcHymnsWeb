@@ -1,6 +1,15 @@
 import { Box, HStack, StackProps, Text, VStack } from "@chakra-ui/react";
+import {
+    DndContext,
+    closestCenter
+} from "@dnd-kit/core";
+import {
+    SortableContext,
+    verticalListSortingStrategy
+} from "@dnd-kit/sortable";
 import { useState } from "react";
 import { HymnDraft } from "../../../hooks/useHymnDraft.types";
+import { useListReorder } from "../../../hooks/useListReorder";
 import OutlineButton from "../../OutlineButton";
 import ItemList from "../../util/AppItemList";
 import { describeVerseCounts, getVerseNumbers } from "./HymnEditLyrics.helpers";
@@ -12,6 +21,10 @@ interface Props extends StackProps {
     onDeleteVerse: (draftId: string) => void;
     onAddVerse: () => void;
     onAddChorus: () => void;
+    onMoveVerse: (
+        fromIndex: number,
+        toIndex: number
+    ) => void;
 }
 
 
@@ -21,6 +34,7 @@ const HymnEditLyrics = ({
     onDeleteVerse,
     onAddChorus,
     onAddVerse,
+    onMoveVerse,
     ...stackProps
 }: Props) => {
     const [idSelectedVerse, setIdSelectedVerse] = useState<string | null>(null);
@@ -30,6 +44,16 @@ const HymnEditLyrics = ({
     const verseCountsText = describeVerseCounts(hymnDraft.verses);
 
     const contentWidth = "600px";
+
+    const {
+        sensors,
+        itemIds,
+        handleDragEnd,
+    } = useListReorder({
+        items: hymnDraft.verses,
+        getId: verse => verse.draftId,
+        onMove: onMoveVerse,
+    });
 
     return (
         <VStack
@@ -75,28 +99,39 @@ const HymnEditLyrics = ({
                         },
                     }}
                 >
-                    <ItemList 
-                        data={hymnDraft.verses}
-                        renderItem={(v) => (
-                            <LiEditHymnVerse 
-                                key={v.draftId}
-                                verseDraft={v}
-                                // choruses are excluded from `verseNumbers`
-                                // they'd be undefined, thus, `0` keeps TS happy.
-                                // the value is ignored for choruses.
-                                verseNumber={verseNumbers.get(v.draftId) ?? 0}
-                                isSelected={v.draftId === idSelectedVerse}
-                                onVerseTextChange={() => setIdSelectedVerse(v.draftId)}
-                                onDragVerseItem={() => {}}
-                                onDeleteVerseDraft={() => onDeleteVerse(v.draftId)}
-                                onSelect={() => setIdSelectedVerse(v.draftId)}
+                    <DndContext
+                        sensors={sensors}
+                        collisionDetection={closestCenter}
+                        onDragEnd={handleDragEnd}
+                    >
+                        <SortableContext
+                            items={itemIds}
+                            strategy={verticalListSortingStrategy}
+                        >
+                            <ItemList 
+                                data={hymnDraft.verses}
+                                renderItem={(v) => (
+                                    <LiEditHymnVerse 
+                                        key={v.draftId}
+                                        verseDraft={v}
+                                        // choruses are excluded from `verseNumbers`
+                                        // they'd be undefined, thus, `0` keeps TS happy.
+                                        // the value is ignored for choruses.
+                                        verseNumber={verseNumbers.get(v.draftId) ?? 0}
+                                        isSelected={v.draftId === idSelectedVerse}
+                                        onVerseTextChange={() => setIdSelectedVerse(v.draftId)}
+                                        onDragVerseItem={() => {}}
+                                        onDeleteVerseDraft={() => onDeleteVerse(v.draftId)}
+                                        onSelect={() => setIdSelectedVerse(v.draftId)}
+                                    />
+                                )}
+                                gap="16px"
+                                edgePadding={0}
+                                w={contentWidth}
+                                mx={"auto"}
                             />
-                        )}
-                        gap="16px"
-                        edgePadding={0}
-                        w={contentWidth}
-                        mx={"auto"}
-                    />
+                        </SortableContext>
+                    </DndContext>
                 </Box>
             </VStack>
             <HStack

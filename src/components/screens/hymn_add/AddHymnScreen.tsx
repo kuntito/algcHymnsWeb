@@ -13,6 +13,7 @@ const AddHymnScreen = () => {
         addChorus,
         updateVerse,
         deleteVerse,
+        moveVerse,
     } = useHymnDraft();
     
     
@@ -33,6 +34,7 @@ const AddHymnScreen = () => {
                 onDeleteVerse={deleteVerse}
                 onAddChorus={addChorus}
                 onAddVerse={addVerse}
+                onMoveVerse={moveVerse}
                 flex={1}
                 minH={0}
             />

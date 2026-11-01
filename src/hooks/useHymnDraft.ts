@@ -2,6 +2,7 @@ import { useState } from "react";
 import { HymnDraft } from "./useHymnDraft.types";
 import { createVerseDraft, validateHymnDraft } from "./useHymnDraft.helpers";
 import { VerseType } from "../api/getHymns.types";
+import { arrayMove } from "@dnd-kit/sortable";
 
 
 const emptyHymnDraft: HymnDraft = {
@@ -88,6 +89,22 @@ export const useHymnDraft = (
         });
     }
 
+    /**
+     * the user can drag verses around to reorder the hymn.
+     *
+     * when a drop happens, the dragged verse takes the place of the
+     * verse it was dropped on, and everything between shifts over by one.
+     */
+    const moveVerse = (
+        fromIndex: number,
+        toIndex: number,
+    ) => {
+        setHymnDraft(prev => ({
+            ...prev,
+            verses: arrayMove(prev.verses, fromIndex, toIndex)
+        }));
+    }
+
     return {
         hymnDraft,
         isDraftValid,
@@ -96,5 +113,6 @@ export const useHymnDraft = (
         updateHymnTitle,
         updateVerse,
         deleteVerse,
+        moveVerse,
     };
 };

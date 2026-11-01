@@ -75,3 +75,7 @@
 
 +   for page navigation.
     `npm i react-router-dom`
+
+
++   for drag and drop items
+    `npm install @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities`
