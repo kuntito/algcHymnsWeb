@@ -7,6 +7,7 @@ import HeaderHymnList from "./components/HeaderHymnList"
 import ListHymn from "./components/ListHymn"
 import { searchHymns } from "../../../util"
 
+// TODO cache hymn list and let user refresh to get the latest.
 const HymnListScreen = () => {
     const stateHymnFetch = useAppStore(s => s.fetchHymnsState);
     const fetchHymns = useAppStore(s => s.fetchHymns);
