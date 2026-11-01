@@ -2,11 +2,16 @@ import { Box, VStack } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import HeaderAddHymn from "./components/HeaderAddHymn";
+import { useHymnDraft } from "../../../hooks/useHymnDraft";
 
 const AddHymnScreen = () => {
-    
-    const contentWidth = "444px";
 
+    const {
+        hymnDraft,
+        updateHymnDraft,
+        isDraftValid,
+    } = useHymnDraft();
+    
     const renderContent = (
 
     ): ReactNode => {
@@ -16,12 +21,17 @@ const AddHymnScreen = () => {
         return null;
     }
     
+    
     return (
         <VStack
             w={"100%"}
             h={"100%"}
         >
-            <HeaderAddHymn />
+            <HeaderAddHymn 
+                hymnTitle={hymnDraft.title}
+                onHymnTitleChange={updateHymnDraft("title")}
+                canSaveHymn={isDraftValid}
+            />
             {renderContent()}
         </VStack>
     )

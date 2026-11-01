@@ -5,8 +5,19 @@ import { LeftChevronIcon } from "../../../appIcons/LeftChevronIcon"
 import { useNavigate } from "react-router-dom"
 import OutlineButton from "../../../OutlineButton"
 import { SaveIcon } from "../../../appIcons/SaveIcon"
+import AppEditableText from "../../../util/AppEditableText"
 
-const HeaderAddHymn = () => {
+interface Props {
+    hymnTitle: string;
+    onHymnTitleChange: (title: string) => void;
+    canSaveHymn: boolean;
+}
+
+const HeaderAddHymn = ({
+    hymnTitle,
+    onHymnTitleChange,
+    canSaveHymn,
+}: Props) => {
     const navigateTo = useNavigate();
 
     const iconSize = "24px";
@@ -35,11 +46,13 @@ const HeaderAddHymn = () => {
                     minW={"500px"}
                     justifyContent={"center"}
                     alignItems={"center"}
-                    border={"1px solid red"}
                 >
-                    <Text>
-                        TODO hymn title
-                    </Text>
+                    <AppEditableText 
+                        value={hymnTitle}
+                        onChange={onHymnTitleChange}
+                        placeholder="add hymn title"
+                        flex={1}
+                    />
                 </Flex>
                 <HStack
                     flex={1}
@@ -49,7 +62,8 @@ const HeaderAddHymn = () => {
                     <OutlineButton 
                         icon={<SaveIcon boxSize={"16px"} />}
                         text={"create hymn"} 
-                        onClick={() => { }} 
+                        onClick={() => { }}
+                        isDisabled={!canSaveHymn}
                     />
                 </HStack>
             </HStack>
