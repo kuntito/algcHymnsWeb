@@ -4,6 +4,7 @@ import AppSearchBar from "../../../AppSearchBar"
 import { Box, HStack } from "@chakra-ui/react";
 import OutlineButton from "../../../OutlineButton";
 import { AddIcon } from "../../../appIcons/AddIcon";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
     query: string;
@@ -17,8 +18,12 @@ const HeaderHymnList = ({
     onClear,
 }: Props) => {
 
-
+    const navigate = useNavigate();
+    
     const buttonText = "add hymn";
+    const goToAddHymnScreen = () => {
+        navigate(`/add`);
+    }
     
     return (
         <FrameAppHeader>
@@ -47,7 +52,7 @@ const HeaderHymnList = ({
                 <OutlineButton 
                     icon={<AddIcon boxSize={"12px"} />}
                     text={buttonText} 
-                    onClick={() => { }} 
+                    onClick={goToAddHymnScreen} 
                 />
             </HStack>
         </FrameAppHeader>
