@@ -36,7 +36,7 @@ const AppEditableText = ({
             onChange={onChange}
             placeholder={placeholder}
             submitOnBlur={true}
-            textAlign={"center"}
+            textAlign={"left"}
             minW={0}
             {...editableProps}
         >

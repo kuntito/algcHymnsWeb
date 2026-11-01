@@ -56,6 +56,7 @@ const LiEditHymnVerse = ({
             w={"100%"}
             gap={0}
             px={"16px"}
+            pb={"16px"}
             borderRadius={"16px"}
             borderColor={borderColor}
             borderWidth={borderWidth}
@@ -76,10 +77,16 @@ const LiEditHymnVerse = ({
                 dragAttributes={attributes}
                 dragListeners={listeners}
             />
-            <HStack>
+            <HStack
+                w={"100%"}
+            >
+                {/* TODO, start here, impl typing hymn lyrics then nav back should show a dialog
+                    so user doesn't accidentally lose progress on typed or edited hymn.
+                */}
                 <AppEditableText
                     value={verseDraft.text}
                     onChange={onVerseTextChange}
+                    placeholder="write lyrics..."
                     w={"100%"}
                     minHeight={"64px"}
                 />

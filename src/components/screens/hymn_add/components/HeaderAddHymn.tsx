@@ -52,6 +52,7 @@ const HeaderAddHymn = ({
                         value={hymnTitle}
                         onChange={onHymnTitleChange}
                         placeholder="add hymn title"
+                        textAlign={"center"}
                         flex={1}
                     />
                 </Flex>
