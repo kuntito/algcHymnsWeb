@@ -1,21 +1,12 @@
 import { useState } from "react";
+import { HymnDraft } from "./useHymnDraft.types";
+import { validateHymnDraft } from "./useHymnDraft.helpers";
 
-type HymnDraft = {
-    title: string;
-};
 
 const emptyHymnDraft: HymnDraft = {
     title: "",
+    verses: [],
 };
-
-const validateHymnDraft = (
-    hymnDraft: HymnDraft
-): boolean => {
-    const isTitleValid = hymnDraft.title.trim() !== "";
-
-    return isTitleValid;
-};
-
 
 // TODO docstring
 export const useHymnDraft = (

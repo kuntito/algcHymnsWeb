@@ -7,14 +7,14 @@ interface Props extends StackProps {
     icon: ReactNode;
     text: string;
     onClick: () => void;
-    isDisabled: boolean;
+    isDisabled?: boolean;
 }
 
 const OutlineButton = ({
     icon,
     text,
     onClick,
-    isDisabled,
+    isDisabled = false,
     ...stackProps
 }: Props) => {
     

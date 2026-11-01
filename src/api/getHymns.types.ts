@@ -1,4 +1,4 @@
-type VerseType = "verse" | "chorus";
+export type VerseType = "verse" | "chorus";
 
 type HymnVerseApi = {
     id: number;
