@@ -1,10 +1,17 @@
-import { Center, Spinner } from "@chakra-ui/react"
+import { Center, CenterProps, Spinner } from "@chakra-ui/react"
 
-const CenterSpinner = () => {
+interface Props extends CenterProps {
+
+}
+
+const CenterSpinner = ({
+    ...centerProps
+}: Props) => {
     return (
         <Center 
             w={"100%"}
             h={"100%"}
+            {...centerProps}
         >
             <Spinner 
                 color="palette.holy"

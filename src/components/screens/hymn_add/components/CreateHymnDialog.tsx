@@ -1,14 +1,16 @@
-import { HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import AppDialog from "../../../util/AppDialog";
 import OutlineButton from "../../../OutlineButton";
 import { SaveIcon } from "../../../appIcons/SaveIcon";
+import CenterSpinner from "../../../util/CenterSpinner";
+import { useState } from "react";
+import useHymnDraftStore from "../../../../state-mgmt/hymnDraftStore";
 
 interface Props {
     isOpen: boolean;
     onDismiss: () => void;
     hymnTitle: string;
     verseCountsText: string;
-    saveHymn: () => void;
 }
 
 
@@ -17,14 +19,31 @@ const CreateHymnDialog = ({
     onDismiss,
     hymnTitle,
     verseCountsText,
-    saveHymn,
 }: Props) => {
-    return (
-        <AppDialog
-            isOpen={isOpen}
-            onDismiss={onDismiss}
-            body={
-                <VStack>
+    const saveHymn = useHymnDraftStore(s => s.createHymn);
+
+    const [isSaving, setIsSaving] = useState(false);
+
+    const handleSave = async () => {
+        setIsSaving(true);
+
+        const isSaved = await saveHymn();
+
+        setIsSaving(false);
+
+        if (isSaved) {
+            onDismiss();
+        }
+    }
+    
+    const renderContent = () => {
+        return (
+            <Box
+                position={"relative"}
+            >
+                <VStack
+                    visibility={isSaving ? "hidden" : "visible"}
+                >
                     <Text
                         color={"palette.holy"}
                         fontSize={"18px"}
@@ -68,11 +87,27 @@ const CreateHymnDialog = ({
                             text={"save"} 
                             borderColor={"palette.life"}
                             color={"palette.life"}
-                            onClick={saveHymn}
+                            onClick={handleSave}
                         />
                     </HStack>
                 </VStack>
-            }
+                {isSaving && (
+                    <CenterSpinner
+                        position={"absolute"}
+                        inset={0}
+                    />
+                )}
+
+            </Box>
+        );
+    }
+
+
+    return (
+        <AppDialog
+            isOpen={isOpen}
+            onDismiss={onDismiss}
+            body={renderContent()}
         />
     )
 }

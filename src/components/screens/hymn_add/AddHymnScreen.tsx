@@ -29,12 +29,6 @@ const AddHymnScreen = () => {
     }
 
     const verseCountsText = describeVerseCounts(hymnDraft.verses);
-    const saveHymn = () => {};
-
-    const handleConfirmCreate = () => {
-        saveHymn();
-        closeCreateDialog();
-    }
     
     return (
         <>
@@ -66,11 +60,9 @@ const AddHymnScreen = () => {
                     onDismiss={closeCreateDialog}
                     hymnTitle={hymnDraft.title}
                     verseCountsText={verseCountsText}
-                    saveHymn={handleConfirmCreate}
                 />)
             }
         </>
-
     )
 }
 

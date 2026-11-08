@@ -2,8 +2,9 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { arrayMove } from "@dnd-kit/sortable";
 import { VerseType } from "../api/getHymns.types";
-import { createVerseDraft } from "./hymnDraftStore.helpers";
+import { createVerseDraft, draftToRequest } from "./hymnDraftStore.helpers";
 import { HymnDraft } from "./hymnDraftStore.types";
+import { hymnsDataSource } from "../api/hymnsDataSource";
 
 
 const emptyHymnDraft: HymnDraft = {
@@ -21,6 +22,7 @@ interface HymnDraftStore {
     deleteVerse: (draftId: string) => void;
     moveVerse: (fromIndex: number, toIndex: number) => void;
     discardDraft: () => void;
+    createHymn: () => Promise<boolean>;
 }
 
 /**
@@ -38,7 +40,7 @@ interface HymnDraftStore {
  */
 const useHymnDraftStore = create<HymnDraftStore>()(
     persist(
-        (set) => {
+        (set, get) => {
             const updateTitle = (newTitle: string) => {
                 set(state => ({
                     hymnDraft: {
@@ -125,6 +127,28 @@ const useHymnDraftStore = create<HymnDraftStore>()(
                 set({ hymnDraft: emptyHymnDraft });
             }
 
+            /**
+             * sends the draft to the server as a new hymn.
+             *
+             * on success the draft is cleared, so the next "add hymn"
+             * starts empty. on failure it's kept, so nothing is lost.
+             *
+             * returns whether it worked, so the screen can tell the user.
+             */
+            const createHymn = async (): Promise<boolean> => {
+                const hymnDraft = get().hymnDraft;
+                const reqBody = draftToRequest(hymnDraft);
+
+                const res = await hymnsDataSource.addHymn(reqBody);
+
+                const isCreated = res != null && res.success;
+                if (isCreated) {
+                    discardDraft();
+                }
+
+                return isCreated;
+            }
+
             return {
                 hymnDraft: emptyHymnDraft,
                 updateTitle,
@@ -134,6 +158,7 @@ const useHymnDraftStore = create<HymnDraftStore>()(
                 deleteVerse,
                 moveVerse,
                 discardDraft,
+                createHymn,
             }
         },
         {
