@@ -8,11 +8,13 @@ type ListableHymn = Hymn & Partial<Pick<SearchedHymn, "matchSource">>;
 
 interface Props {
     hymns: ListableHymn[];
+    contentWidth: string;
 }
 
 
 const ListHymn = ({
-    hymns
+    hymns,
+    contentWidth,
 }: Props) => {
     const navigate = useNavigate();
 
@@ -34,7 +36,7 @@ const ListHymn = ({
             edgePadding={8}
             // TODO, this the same size as the search bar
             // don't hard code, pass same ref to both.
-            maxW={"444px"}
+            maxW={contentWidth}
         />
     )
 }

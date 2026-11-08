@@ -8,6 +8,7 @@ interface Props {
     onQueryChange: (q: string) => void;
     onClear: () => void;
     placeholder?: string;
+    width: string;
 }
 
 const AppSearchBar = ({
@@ -15,6 +16,7 @@ const AppSearchBar = ({
     onQueryChange,
     onClear,
     placeholder,
+    width,
 }: Props) => {
 
     const iconColor = "palette.dim";
@@ -32,7 +34,7 @@ const AppSearchBar = ({
             borderRadius={50}
             ps={"16px"}
             pe={"10px"}
-            w={"444px"}
+            w={width}
         >
             <SearchIcon color={iconColor} />
             <Input 

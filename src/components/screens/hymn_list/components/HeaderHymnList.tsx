@@ -10,12 +10,14 @@ type Props = {
     query: string;
     onQueryChange: (q: string) => void;
     onClear: () => void;
+    searchBarWidth: string;
 };
 
 const HeaderHymnList = ({
     query,
     onQueryChange,
     onClear,
+    searchBarWidth,
 }: Props) => {
 
     const navigate = useNavigate();
@@ -45,6 +47,7 @@ const HeaderHymnList = ({
                     onQueryChange={onQueryChange}
                     onClear={onClear}
                     placeholder="search by title or lyrics"
+                    width={searchBarWidth}
                 />
                 <HStack
                     flex={1}

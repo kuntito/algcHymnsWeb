@@ -6,6 +6,7 @@ import RetryAction from "../../util/RetryAction"
 import HeaderHymnList from "./components/HeaderHymnList"
 import ListHymn from "./components/ListHymn"
 import { searchHymns } from "../../../util"
+import { contentWidth } from "../../../config/appConfig"
 
 // TODO cache hymn list and let user refresh to get the latest.
 const HymnListScreen = () => {
@@ -36,6 +37,7 @@ const HymnListScreen = () => {
     useEffect(() => {
         fetchHymns();
     }, [])
+
 
     const renderContent = () => {
         switch(stateHymnFetch.kind) {
@@ -90,6 +92,7 @@ const HymnListScreen = () => {
                             ) : (
                                 <ListHymn 
                                     hymns={hymnsToShow}
+                                    contentWidth={contentWidth}
                                 />
                             )
                         }
@@ -109,6 +112,7 @@ const HymnListScreen = () => {
                 query={searchQuery}
                 onQueryChange={setSearchQuery}
                 onClear={clearSearchQuery}
+                searchBarWidth={contentWidth}
             />
             {renderContent()}   
         </VStack>

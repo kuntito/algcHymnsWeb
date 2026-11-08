@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { HymnVerse } from "../../../../models/hymn"
 import ItemList from "../../../util/AppItemList"
 import LiHymnLyric from "./LiHymnLyric";
+import { contentWidth } from "../../../../config/appConfig";
 
 interface Props {
     verses: HymnVerse[];
@@ -59,7 +60,7 @@ const ListHymnLyrics = ({
             )}
             gap="16px"
             edgePadding={8}
-            maxW={"444px"}
+            maxW={contentWidth}
         />
     )
 }

@@ -1,0 +1,1 @@
+export const contentWidth = "500px";
