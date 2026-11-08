@@ -1,4 +1,4 @@
-import { HymnVerseDraft } from "../../../hooks/useHymnDraft.types";
+import { HymnVerseDraft } from "../../../../state-mgmt/hymnDraftStore.types";
 
 /**
  * only normal verses get numbers, choruses are skipped.

@@ -1,5 +1,5 @@
 import { VerseType } from "../api/getHymns.types";
-import { HymnDraft, HymnVerseDraft } from "./useHymnDraft.types";
+import { HymnDraft, HymnVerseDraft } from "./hymnDraftStore.types";
 
 const validateHymnTitle = (
     title: string

@@ -8,10 +8,10 @@ import {
     verticalListSortingStrategy
 } from "@dnd-kit/sortable";
 import { useState } from "react";
-import { HymnDraft } from "../../../hooks/useHymnDraft.types";
-import { useListReorder } from "../../../hooks/useListReorder";
-import OutlineButton from "../../OutlineButton";
-import ItemList from "../../util/AppItemList";
+import { HymnDraft } from "../../../../state-mgmt/hymnDraftStore.types";
+import { useListReorder } from "../../../../hooks/useListReorder";
+import OutlineButton from "../../../OutlineButton";
+import ItemList from "../../../util/AppItemList";
 import { describeVerseCounts, getVerseNumbers } from "./HymnEditLyrics.helpers";
 import LiEditHymnVerse from "./LiEditHymnVerse";
 
@@ -119,8 +119,7 @@ const HymnEditLyrics = ({
                                         // the value is ignored for choruses.
                                         verseNumber={verseNumbers.get(v.draftId) ?? 0}
                                         isSelected={v.draftId === idSelectedVerse}
-                                        onVerseTextChange={() => setIdSelectedVerse(v.draftId)}
-                                        onDragVerseItem={() => {}}
+                                        onVerseTextChange={(text) => onVerseTextChange(v.draftId, text)}
                                         onDeleteVerseDraft={() => onDeleteVerse(v.draftId)}
                                         onSelect={() => setIdSelectedVerse(v.draftId)}
                                     />

@@ -1,20 +1,20 @@
 import { VStack } from "@chakra-ui/react";
-import { useHymnDraft } from "../../../hooks/useHymnDraft";
 import HeaderAddHymn from "./components/HeaderAddHymn";
-import HymnEditLyrics from "./HymnEditLyrics";
+import HymnEditLyrics from "./components/HymnEditLyrics";
+import useHymnDraftStore from "../../../state-mgmt/hymnDraftStore";
+import { validateHymnDraft } from "../../../state-mgmt/hymnDraftStore.helpers";
 
 const AddHymnScreen = () => {
 
-    const {
-        hymnDraft,
-        isDraftValid,
-        updateHymnTitle,
-        addVerse,
-        addChorus,
-        updateVerse,
-        deleteVerse,
-        moveVerse,
-    } = useHymnDraft();
+    const hymnDraft = useHymnDraftStore(s => s.hymnDraft);
+    const updateTitle = useHymnDraftStore(s => s.updateTitle);
+    const addVerse = useHymnDraftStore(s => s.addVerse);
+    const addChorus = useHymnDraftStore(s => s.addChorus);
+    const updateVerse = useHymnDraftStore(s => s.updateVerse);
+    const deleteVerse = useHymnDraftStore(s => s.deleteVerse);
+    const moveVerse = useHymnDraftStore(s => s.moveVerse);
+
+    const isDraftValid = validateHymnDraft(hymnDraft);
     
     
     return (
@@ -25,7 +25,7 @@ const AddHymnScreen = () => {
         >
             <HeaderAddHymn 
                 hymnTitle={hymnDraft.title}
-                onHymnTitleChange={updateHymnTitle}
+                onHymnTitleChange={updateTitle}
                 canSaveHymn={isDraftValid}
             />
             <HymnEditLyrics

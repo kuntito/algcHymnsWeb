@@ -1,16 +1,15 @@
 import { HStack, VStack } from "@chakra-ui/react";
-import { HymnVerseDraft } from "../../../hooks/useHymnDraft.types";
-import AppEditableText from "../../util/AppEditableText";
+import { HymnVerseDraft } from "../../../../state-mgmt/hymnDraftStore.types";
 import HeaderEditHymnVerse from "./HeaderEditHymnVerse";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import VerseTextArea from "./VerseTextArea";
 
 interface Props {
     verseNumber: number;
     verseDraft: HymnVerseDraft;
     isSelected: boolean;
     onVerseTextChange: (value: string) => void;
-    onDragVerseItem: () => void;
     onDeleteVerseDraft: () => void;
     onSelect: () => void;
 }
@@ -20,7 +19,6 @@ const LiEditHymnVerse = ({
     verseDraft,
     isSelected,
     onVerseTextChange,
-    onDragVerseItem,
     onDeleteVerseDraft,
     onSelect,
 }: Props) => {
@@ -71,7 +69,6 @@ const LiEditHymnVerse = ({
         >
             <HeaderEditHymnVerse 
                 verseTitle={verseTitle}
-                onDragVerseItem={onDragVerseItem}
                 onDeleteVerseDraft={onDeleteVerseDraft}
                 isSelected={isSelected}
                 dragAttributes={attributes}
@@ -80,15 +77,12 @@ const LiEditHymnVerse = ({
             <HStack
                 w={"100%"}
             >
-                {/* TODO, start here, impl typing hymn lyrics then nav back should show a dialog
-                    so user doesn't accidentally lose progress on typed or edited hymn.
-                */}
-                <AppEditableText
+                <VerseTextArea
                     value={verseDraft.text}
                     onChange={onVerseTextChange}
+                    onFocus={onSelect}
                     placeholder="write lyrics..."
                     w={"100%"}
-                    minHeight={"64px"}
                 />
             </HStack>
         </VStack>

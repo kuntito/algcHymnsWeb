@@ -1,14 +1,13 @@
 import { Center, Divider, HStack, Text, VStack } from "@chakra-ui/react"
-import AppIconButton from "../../util/AppIconButton"
-import { DragIcon } from "../../appIcons/DragIcon"
-import { RoundXIcon } from "../../appIcons/RoundXIcon";
 import { useSortable } from "@dnd-kit/sortable";
+import { DragIcon } from "../../../appIcons/DragIcon";
+import { RoundXIcon } from "../../../appIcons/RoundXIcon";
+import AppIconButton from "../../../util/AppIconButton";
 
 type SortableHandle = ReturnType<typeof useSortable>;
 
 interface Props {
     verseTitle: string;
-    onDragVerseItem: () => void;
     onDeleteVerseDraft: () => void;
     isSelected: boolean;
     dragAttributes: SortableHandle["attributes"];
@@ -17,7 +16,6 @@ interface Props {
 
 const HeaderEditHymnVerse = ({
     verseTitle,
-    onDragVerseItem,
     onDeleteVerseDraft,
     isSelected,
     dragAttributes,
