@@ -3,6 +3,9 @@ import HeaderAddHymn from "./components/HeaderAddHymn";
 import HymnEditLyrics from "./components/HymnEditLyrics";
 import useHymnDraftStore from "../../../state-mgmt/hymnDraftStore";
 import { validateHymnDraft } from "../../../state-mgmt/hymnDraftStore.helpers";
+import { useState } from "react";
+import CreateHymnDialog from "./components/CreateHymnDialog";
+import { describeVerseCounts } from "./components/HymnEditLyrics.helpers";
 
 const AddHymnScreen = () => {
 
@@ -15,30 +18,59 @@ const AddHymnScreen = () => {
     const moveVerse = useHymnDraftStore(s => s.moveVerse);
 
     const isDraftValid = validateHymnDraft(hymnDraft);
-    
+
+    const [isOpenCreateDialog, setIsOpenCreateDialog] = useState(false);
+
+    const openCreateDialog = () => {
+        setIsOpenCreateDialog(true);
+    }
+    const closeCreateDialog = () => {
+        setIsOpenCreateDialog(false);
+    }
+
+    const verseCountsText = describeVerseCounts(hymnDraft.verses);
+    const saveHymn = () => {};
+
+    const handleConfirmCreate = () => {
+        saveHymn();
+        closeCreateDialog();
+    }
     
     return (
-        <VStack
-            w={"100%"}
-            h={"100%"}
-            overflow={"hidden"}
-        >
-            <HeaderAddHymn 
-                hymnTitle={hymnDraft.title}
-                onHymnTitleChange={updateTitle}
-                canSaveHymn={isDraftValid}
-            />
-            <HymnEditLyrics
-                hymnDraft={hymnDraft}
-                onVerseTextChange={updateVerse}
-                onDeleteVerse={deleteVerse}
-                onAddChorus={addChorus}
-                onAddVerse={addVerse}
-                onMoveVerse={moveVerse}
-                flex={1}
-                minH={0}
-            />
-        </VStack>
+        <>
+            <VStack
+                w={"100%"}
+                h={"100%"}
+                overflow={"hidden"}
+            >
+                <HeaderAddHymn 
+                    hymnTitle={hymnDraft.title}
+                    onHymnTitleChange={updateTitle}
+                    canSaveHymn={isDraftValid}
+                    onCreateHymn={openCreateDialog}
+                />
+                <HymnEditLyrics
+                    hymnDraft={hymnDraft}
+                    onVerseTextChange={updateVerse}
+                    onDeleteVerse={deleteVerse}
+                    onAddChorus={addChorus}
+                    onAddVerse={addVerse}
+                    onMoveVerse={moveVerse}
+                    flex={1}
+                    minH={0}
+                />
+            </VStack>
+            {isDraftValid && (
+                <CreateHymnDialog
+                    isOpen={isOpenCreateDialog}
+                    onDismiss={closeCreateDialog}
+                    hymnTitle={hymnDraft.title}
+                    verseCountsText={verseCountsText}
+                    saveHymn={handleConfirmCreate}
+                />)
+            }
+        </>
+
     )
 }
 

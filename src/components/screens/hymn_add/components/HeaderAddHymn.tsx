@@ -11,12 +11,14 @@ interface Props {
     hymnTitle: string;
     onHymnTitleChange: (title: string) => void;
     canSaveHymn: boolean;
+    onCreateHymn: () => void;
 }
 
 const HeaderAddHymn = ({
     hymnTitle,
     onHymnTitleChange,
     canSaveHymn,
+    onCreateHymn,
 }: Props) => {
     const navigateTo = useNavigate();
 
@@ -64,7 +66,7 @@ const HeaderAddHymn = ({
                     <OutlineButton 
                         icon={<SaveIcon boxSize={"16px"} />}
                         text={"create hymn"} 
-                        onClick={() => { }}
+                        onClick={onCreateHymn}
                         isDisabled={!canSaveHymn}
                     />
                 </HStack>
