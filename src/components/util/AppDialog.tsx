@@ -16,6 +16,9 @@ interface Props {
     footer?: React.ReactNode;
     size?: string;
     bgColor?: string;
+    // false while something is in progress, like a save or delete,
+    // so escape, outside clicks and the close button do nothing.
+    canDismiss?: boolean;
 }
 
 const AppDialog = ({ 
@@ -25,6 +28,7 @@ const AppDialog = ({
     footer,
     size = 'sm',
     bgColor = "palette.iju",
+    canDismiss = true,
 }: Props) => {
     const cancelRef = useRef<HTMLButtonElement>(null);
 
@@ -36,15 +40,19 @@ const AppDialog = ({
             isOpen={isOpen}
             isCentered
             size={size}
+            closeOnEsc={canDismiss}
+            closeOnOverlayClick={canDismiss}
         >
             <AlertDialogOverlay />
             <AlertDialogContent
                 borderRadius={"16px"}
                 overflow={"hidden"}
             >
-                <AlertDialogCloseButton 
-                    color={"palette.holy"}
-                />
+                {canDismiss && (
+                    <AlertDialogCloseButton
+                        color={"palette.holy"}
+                    />
+                )}
                 <AlertDialogBody
                     pt={"32px"}
                     pb={"32px"}

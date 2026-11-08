@@ -7,7 +7,7 @@ type HymnVerseApi = {
     verseLines: string[];
 }
 
-type HymnApi = {
+export type HymnApi = {
     id: number;
     title: string;
     updatedAt: Date;

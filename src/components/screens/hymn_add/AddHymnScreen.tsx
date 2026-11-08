@@ -5,7 +5,6 @@ import useHymnDraftStore from "../../../state-mgmt/hymnDraftStore";
 import { validateHymnDraft } from "../../../state-mgmt/hymnDraftStore.helpers";
 import { useState } from "react";
 import CreateHymnDialog from "./components/CreateHymnDialog";
-import { describeVerseCounts } from "./components/HymnEditLyrics.helpers";
 
 const AddHymnScreen = () => {
 
@@ -28,7 +27,6 @@ const AddHymnScreen = () => {
         setIsOpenCreateDialog(false);
     }
 
-    const verseCountsText = describeVerseCounts(hymnDraft.verses);
     
     return (
         <>
@@ -58,8 +56,6 @@ const AddHymnScreen = () => {
                 <CreateHymnDialog
                     isOpen={isOpenCreateDialog}
                     onDismiss={closeCreateDialog}
-                    hymnTitle={hymnDraft.title}
-                    verseCountsText={verseCountsText}
                 />)
             }
         </>

@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { Hymn } from "../models/hymn";
 import { hymnsDataSource } from "../api/hymnsDataSource";
+import { HymnDraft } from "./hymnDraftStore.types";
+import { draftToRequest } from "./hymnDraftStore.helpers";
 
 type FetchHymnsState = 
     | { kind: 'idle' }
@@ -21,6 +23,7 @@ interface appStore {
     setSearchQuery: (query: string) => void;
     clearSearchQuery: () => void;
     deleteHymn: (hymnId: number) => Promise<boolean>;
+    createHymn: (hymnDraft: HymnDraft) => Promise<boolean>;
 }
 
 const useAppStore = create<appStore>((set, get) => {
@@ -109,8 +112,50 @@ const useAppStore = create<appStore>((set, get) => {
         return true;
     }
 
+    /**
+     * adds a newly created hymn to the local list,
+     * so it shows without a refetch.
+     *
+     * if the list hasn't loaded yet, there's nothing to add to.
+     * the next fetch will include it anyway.
+     */
+    const appendHymn = (
+        hymn: Hymn
+    ) => {
+        const current = get().fetchHymnsState;
+        const hasLoadedHymns = current.kind === "success";
+        if (!hasLoadedHymns) return;
+
+        set({
+            fetchHymnsState: {
+                kind: 'success',
+                hymns: [...current.hymns, hymn],
+            }
+        });
+    }
 
 
+    /**
+     * sends a draft to the server as a new hymn,
+     * then adds the created hymn to the local list.
+     *
+     * returns whether the hymn was created.
+     */
+    const createHymn = async (
+        hymnDraft: HymnDraft
+    ): Promise<boolean> => {
+        const reqBody = draftToRequest(hymnDraft);
+
+        const res = await hymnsDataSource.addHymn(reqBody);
+
+        const isCreated = res != null && res.success;
+        if (!isCreated) return false;
+
+        appendHymn(res.hymn);
+
+        return true;
+    }
+    
     return {
         fetchHymnsState: defaultFetchHymnsState,
         fetchHymns: getHymns,
@@ -119,6 +164,7 @@ const useAppStore = create<appStore>((set, get) => {
         setSearchQuery,
         clearSearchQuery,
         deleteHymn,
+        createHymn,
     }
 });
 

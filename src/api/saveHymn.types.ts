@@ -1,4 +1,4 @@
-import { VerseType } from "./getHymns.types";
+import { HymnApi, VerseType } from "./getHymns.types";
 
 /// request
 type AddHymnVerseRequest = {
@@ -16,6 +16,7 @@ export type AddHymnRequest = {
 /// response
 interface AddHymnSuccess {
     success: true;
+    hymn: HymnApi;
 }
 
 interface AddHymnFail {

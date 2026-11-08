@@ -122,6 +122,7 @@ const DialogDeleteHymn = ({
         <AppDialog
             isOpen={isOpen}
             onDismiss={onDismiss}
+            canDismiss={!isDeleting}
             body={renderContent()}
         />
     )

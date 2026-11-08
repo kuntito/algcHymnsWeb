@@ -1,39 +1,63 @@
-import { Box, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, HStack, Text, useToast, VStack } from "@chakra-ui/react";
 import AppDialog from "../../../util/AppDialog";
 import OutlineButton from "../../../OutlineButton";
 import { SaveIcon } from "../../../appIcons/SaveIcon";
 import CenterSpinner from "../../../util/CenterSpinner";
 import { useState } from "react";
 import useHymnDraftStore from "../../../../state-mgmt/hymnDraftStore";
+import useAppStore from "../../../../state-mgmt/appStore";
+import appToastConfig from "../../../../config/toastConfig";
+import { describeVerseCounts } from "./HymnEditLyrics.helpers";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
     isOpen: boolean;
     onDismiss: () => void;
-    hymnTitle: string;
-    verseCountsText: string;
 }
 
 
 const CreateHymnDialog = ({
     isOpen,
     onDismiss,
-    hymnTitle,
-    verseCountsText,
 }: Props) => {
-    const saveHymn = useHymnDraftStore(s => s.createHymn);
+    const hymnDraft = useHymnDraftStore(s => s.hymnDraft);
+    const discardDraft = useHymnDraftStore(s => s.discardDraft);
+    const createHymn = useAppStore(s => s.createHymn);
+
+    const hymnTitle = hymnDraft.title;
+    const verseCountsText = describeVerseCounts(hymnDraft.verses);
 
     const [isSaving, setIsSaving] = useState(false);
 
+    const navigateTo = useNavigate();
+
+    const toast = useToast();
     const handleSave = async () => {
         setIsSaving(true);
 
-        const isSaved = await saveHymn();
+        const isCreated = await createHymn(hymnDraft);
 
         setIsSaving(false);
 
-        if (isSaved) {
-            onDismiss();
+        if (!isCreated){ 
+            toast({
+                ...appToastConfig,
+                description: "something went wrong, try again.",
+                status: "error"
+            });
+            return;
         }
+
+        toast({
+            ...appToastConfig,
+            description: `added ${hymnTitle}`,
+            status: "success"
+        });
+
+        discardDraft();
+        onDismiss();
+
+        navigateTo("/");
     }
     
     const renderContent = () => {
@@ -107,6 +131,7 @@ const CreateHymnDialog = ({
         <AppDialog
             isOpen={isOpen}
             onDismiss={onDismiss}
+            canDismiss={!isSaving}
             body={renderContent()}
         />
     )
