@@ -1,4 +1,5 @@
 import { envConfig } from "../config/envConfig";
+import { DeleteHymnResponse } from "./deleteHymn.types";
 import { GetHymnsResponse } from "./getHymns.types";
 import { AddHymnRequest, AddHymnResponse } from "./saveHymn.types";
 
@@ -30,6 +31,20 @@ const algcApiClient = {
                     'ngrok-skip-browser-warning': 'true',
                 },
                 body: JSON.stringify(reqBody),
+            }
+        );
+
+        return res.json();
+    },
+    deleteHymn: async (
+        hymnId: number
+    ): Promise<DeleteHymnResponse> => {
+        const url = `${BASE_URL}/api/algc/hymn/${hymnId}`;
+        const res = await fetch(
+            url,
+            {
+                method: "DELETE",
+                headers: { 'ngrok-skip-browser-warning': 'true' },
             }
         );
 

@@ -24,7 +24,7 @@ const AppDialog = ({
     body,
     footer,
     size = 'sm',
-    bgColor = "palette.cathedral",
+    bgColor = "palette.iju",
 }: Props) => {
     const cancelRef = useRef<HTMLButtonElement>(null);
 

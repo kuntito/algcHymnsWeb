@@ -5,6 +5,7 @@ import useAppStore from "../../../state-mgmt/appStore";
 import { useState } from "react";
 import EditHymnFrame from "./components/EditHymnFrame";
 import ListHymnLyrics from "./components/ListHymnLyrics";
+import DialogDeleteHymn from "./components/DialogDeleteHymn";
 
 
 const HymnViewScreen = () => {
@@ -18,6 +19,15 @@ const HymnViewScreen = () => {
 
     const [isEditing, setEditing] = useState(false);
     
+    const [isOpenDeleteDialog, setIsOpenDeleteDialog] = useState(false);
+
+    const openDeleteDialog = () => {
+        setIsOpenDeleteDialog(true);
+    }
+
+    const closeDeleteDialog = () => {
+        setIsOpenDeleteDialog(false);
+    }
 
     if (hymn == null) {
         return (
@@ -67,16 +77,25 @@ const HymnViewScreen = () => {
     }
 
     return (
-        <VStack
-            w={"100%"}
-            h={"100%"}
-        >
-            <HeaderHymnView
+        <>
+            <VStack
+                w={"100%"}
+                h={"100%"}
+            >
+                <HeaderHymnView
+                    hymnTitle={hymn.title}
+                    isEditing={isEditing}
+                    onDeleteHymn={openDeleteDialog}
+                />
+                { renderContent() }
+            </VStack>
+            <DialogDeleteHymn
+                isOpen={isOpenDeleteDialog}
+                onDismiss={closeDeleteDialog}
+                hymnId={hymn.id}
                 hymnTitle={hymn.title}
-                isEditing={isEditing}
             />
-            { renderContent() }
-        </VStack>
+        </>
     )
 }
 

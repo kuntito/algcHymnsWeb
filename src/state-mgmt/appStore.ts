@@ -20,6 +20,7 @@ interface appStore {
     searchQuery: string;
     setSearchQuery: (query: string) => void;
     clearSearchQuery: () => void;
+    deleteHymn: (hymnId: number) => Promise<boolean>;
 }
 
 const useAppStore = create<appStore>((set, get) => {
@@ -75,6 +76,39 @@ const useAppStore = create<appStore>((set, get) => {
         set({ searchQuery: defaultSearchQuery });
     }
 
+    /**
+     * deletes a hymn on the server,
+     * then drops it from the local list.
+     * 
+     * returns whether the hymn was deleted.
+     */
+    const deleteHymn = async (
+        hymnId: number
+    ): Promise<boolean> => {
+        const res = await hymnsDataSource.deleteHymn(hymnId);
+
+        const isDeleted = res != null && res.success;
+        if (!isDeleted) return false;
+
+        const current = get().fetchHymnsState;
+        const hasLoadedHymns = current.kind === "success";
+
+        if (hasLoadedHymns) {
+            const remainingHymns = current.hymns.filter(
+                hymn => hymn.id !== hymnId
+            );
+
+            set({
+                fetchHymnsState: {
+                    kind: 'success',
+                    hymns: remainingHymns,
+                }
+            });
+        }
+
+        return true;
+    }
+
 
 
     return {
@@ -84,6 +118,7 @@ const useAppStore = create<appStore>((set, get) => {
         searchQuery: defaultSearchQuery,
         setSearchQuery,
         clearSearchQuery,
+        deleteHymn,
     }
 });
 

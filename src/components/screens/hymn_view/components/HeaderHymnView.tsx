@@ -7,15 +7,18 @@ import { LeftChevronIcon } from "../../../appIcons/LeftChevronIcon";
 import AppIconButton from "../../../util/AppIconButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { EditIcon } from "../../../appIcons/EditIcon";
+import { DeleteIcon } from "../../../appIcons/DeleteIcon";
 
 interface Props {
     hymnTitle: string;
     isEditing: boolean;
+    onDeleteHymn: () => void;
 }
 
 const HeaderHymnView = ({
     hymnTitle,
     isEditing,
+    onDeleteHymn,
 }: Props) => {
     const navigateTo = useNavigate();
     const iconSize = "24px";
@@ -23,42 +26,53 @@ const HeaderHymnView = ({
     
     return (
         <FrameAppHeader>
-            <AppIconButton
-                icon={<LeftChevronIcon boxSize={iconSize} />}
-                iconColor="palette.holy"
-                iconColorWhenHovered="palette.testimony"
-                onClick={() => navigateTo("/")}
-            />
             <HStack
                 flex={1}
-                h={"100%"}
                 gap={"16px"}
-                minW={0}
+                justifyContent={"flex-start"}
             >
-                <EllipsisText
-                    flex={1}
-                    textAlign={"center"}
-                >
-                    {hymnTitle}
-                </EllipsisText>
+                <AppIconButton
+                    icon={<LeftChevronIcon boxSize={iconSize} />}
+                    iconColor="palette.holy"
+                    iconColorWhenHovered="palette.testimony"
+                    onClick={() => navigateTo("/")}
+                />
             </HStack>
-            {
-                isEditing ? (
-                    // TODO cant save hymn unless edited.
-                    <OutlineButton 
-                        icon={<SaveIcon boxSize={"16px"} />}
-                        text={"save"} 
-                        onClick={() => { }} 
-                    />
-                ) : (
-                    <OutlineButton 
-                        icon={<EditIcon boxSize={"16px"} />}
-                        text={"edit"} 
-                        onClick={() => { }} 
-                    />
-                    
-                )
-            }
+            <EllipsisText
+                flex={1}
+                textAlign={"center"}
+            >
+                {hymnTitle}
+            </EllipsisText>
+            <HStack
+                flex={1}
+                justifyContent={"flex-end"}
+                gap={"16px"}
+            >
+                {
+                    isEditing ? (
+                        // TODO cant save hymn unless edited.
+                        <OutlineButton 
+                            icon={<SaveIcon boxSize={"16px"} />}
+                            text={"save"} 
+                            onClick={() => { }} 
+                        />
+                    ) : (
+                        <OutlineButton 
+                            icon={<EditIcon boxSize={"16px"} />}
+                            text={"edit"} 
+                            onClick={() => { }} 
+                        />
+                        
+                    )
+                }
+                <AppIconButton
+                    icon={<DeleteIcon boxSize={iconSize} />}
+                    iconColor="palette.holyAlpha"
+                    iconColorWhenHovered="palette.holy"
+                    onClick={onDeleteHymn}
+                />
+            </HStack>
         </FrameAppHeader>
     )
 }
