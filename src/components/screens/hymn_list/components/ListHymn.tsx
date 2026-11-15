@@ -33,7 +33,7 @@ const ListHymn = ({
                 />
             )}
             gap="16px"
-            edgePadding={8}
+            edgePadding={0}
             // TODO, this the same size as the search bar
             // don't hard code, pass same ref to both.
             maxW={contentWidth}

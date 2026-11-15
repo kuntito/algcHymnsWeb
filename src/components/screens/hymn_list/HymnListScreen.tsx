@@ -1,4 +1,4 @@
-import { Box, Center, Text, VStack } from "@chakra-ui/react"
+import { Box, Center, HStack, Text, VStack } from "@chakra-ui/react"
 import { useEffect, useMemo, useState } from "react"
 import useAppStore from "../../../state-mgmt/appStore"
 import CenterSpinner from "../../util/CenterSpinner"
@@ -57,46 +57,71 @@ const HymnListScreen = () => {
                 const hasNoResults = isSearching && hymnsToShow.length === 0;
 
                 return (
-                    <Box
-                        flex={1}
+                    <VStack
+                        h={"100%"}
                         w={"100%"}
-                        overflowY={"auto"}
-                        sx={{
-                            '&::-webkit-scrollbar': {
-                                width: '4px',
-                            },
-                            '&::-webkit-scrollbar-track': {
-                                bg: 'palette.holy',
-                                borderRadius: '4px',
-                            },
-                            '&::-webkit-scrollbar-thumb': {
-                                bg: 'palette.iju',
-                                borderRadius: '4px',
-                            },
-                        }}
-                        justifyItems={"center"}
+                        overflow={"hidden"}
+                        py={"16px"} 
+                        gap={0}
                     >
-                        {hasNoResults ?
-                            (
-                                <Center
-                                    w={"100%"}
-                                    h={"100%"}
+                        {
+                            hymnsToShow.length > 0 && (
+                                <HStack
+                                    w={"full"}
+                                    pt={"16px"}
+                                    justifyContent={"space-between"}
+                                    width={contentWidth}
                                 >
                                     <Text
-                                        textStyle={"orion"}
+                                        textStyle={"hush"}
                                         color={"palette.holy"}
                                     >
-                                        couldn't find it.
+                                        {hymnsToShow.length === 1 ? "1 hymn" : `${hymnsToShow.length} hymns`}
                                     </Text>
-                                </Center>
-                            ) : (
-                                <ListHymn 
-                                    hymns={hymnsToShow}
-                                    contentWidth={contentWidth}
-                                />
+                                </HStack>
                             )
                         }
-                    </Box>
+                        <Box
+                            flex={1}
+                            w={"100%"}
+                            overflowY={"auto"}
+                            sx={{
+                                '&::-webkit-scrollbar': {
+                                    width: '4px',
+                                },
+                                '&::-webkit-scrollbar-track': {
+                                    bg: 'palette.holy',
+                                    borderRadius: '4px',
+                                },
+                                '&::-webkit-scrollbar-thumb': {
+                                    bg: 'palette.iju',
+                                    borderRadius: '4px',
+                                },
+                            }}
+                            justifyItems={"center"}
+                        >
+                            {hasNoResults ?
+                                (
+                                    <Center
+                                        w={"100%"}
+                                        h={"100%"}
+                                    >
+                                        <Text
+                                            textStyle={"orion"}
+                                            color={"palette.holy"}
+                                        >
+                                            couldn't find it.
+                                        </Text>
+                                    </Center>
+                                ) : (
+                                    <ListHymn 
+                                        hymns={hymnsToShow}
+                                        contentWidth={contentWidth}
+                                    />
+                                )
+                            }
+                        </Box>
+                    </VStack>
                 )
             }
         }
