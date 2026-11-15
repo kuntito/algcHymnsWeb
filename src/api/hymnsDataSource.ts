@@ -15,4 +15,8 @@ export const hymnsDataSource = {
         () => algcApiClient.deleteHymn(hymnId),
         "deletes a hymn"
     ),
+    updateHymn: (hymnId: number, reqBody: AddHymnRequest) => safeApiCall(
+        () => algcApiClient.updateHymn(hymnId, reqBody),
+        "updates a hymn through the api"
+    ),
 }
