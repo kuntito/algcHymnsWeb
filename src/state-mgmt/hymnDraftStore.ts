@@ -1,10 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { arrayMove } from "@dnd-kit/sortable";
-import { VerseType } from "../api/getHymns.types";
-import { createVerseDraft, draftToRequest } from "./hymnDraftStore.helpers";
+import { withAppendedVerse, withMovedVerse, withTitle, withUpdatedVerse, withoutVerse } from "./hymnDraft.transform";
 import { HymnDraft } from "./hymnDraftStore.types";
-import { hymnsDataSource } from "../api/hymnsDataSource";
 
 
 const emptyHymnDraft: HymnDraft = {
@@ -39,75 +36,38 @@ interface HymnDraftStore {
  */
 const useHymnDraftStore = create<HymnDraftStore>()(
     persist(
-        (set, get) => {
+        (set) => {
             const updateTitle = (newTitle: string) => {
                 set(state => ({
-                    hymnDraft: {
-                        ...state.hymnDraft,
-                        title: newTitle
-                    }
-                }));
-            }
-
-            const appendVerseDraft = (verseType: VerseType) => {
-                const newVerseDraft = createVerseDraft(verseType);
-
-                set(state => ({
-                    hymnDraft: {
-                        ...state.hymnDraft,
-                        verses: [...state.hymnDraft.verses, newVerseDraft]
-                    }
+                    hymnDraft: withTitle(state.hymnDraft, newTitle)
                 }));
             }
 
             const addVerse = () => {
-                appendVerseDraft("verse");
+                set(state => ({
+                    hymnDraft: withAppendedVerse(state.hymnDraft, "verse")
+                }));
             }
 
             const addChorus = () => {
-                appendVerseDraft("chorus");
+                set(state => ({
+                    hymnDraft: withAppendedVerse(state.hymnDraft, "chorus")
+                }));
             }
 
             const updateVerse = (
                 draftId: string,
                 newText: string,
             ) => {
-                set(state => {
-                    const updatedVerseDrafts = state.hymnDraft.verses.map(verseDraft => {
-                        const isTarget = verseDraft.draftId === draftId;
-
-                        if (isTarget) {
-                            return {
-                                ...verseDraft,
-                                text: newText
-                            };
-                        }
-
-                        return verseDraft;
-                    });
-
-                    return {
-                        hymnDraft: {
-                            ...state.hymnDraft,
-                            verses: updatedVerseDrafts
-                        }
-                    };
-                });
+                set(state => ({
+                    hymnDraft: withUpdatedVerse(state.hymnDraft, draftId, newText)
+                }));
             }
 
             const deleteVerse = (draftId: string) => {
-                set(state => {
-                    const remainingVerseDrafts = state.hymnDraft.verses.filter(
-                        verse => verse.draftId !== draftId
-                    );
-
-                    return {
-                        hymnDraft: {
-                            ...state.hymnDraft,
-                            verses: remainingVerseDrafts
-                        }
-                    };
-                });
+                set(state => ({
+                    hymnDraft: withoutVerse(state.hymnDraft, draftId)
+                }));
             }
 
             const moveVerse = (
@@ -115,10 +75,7 @@ const useHymnDraftStore = create<HymnDraftStore>()(
                 toIndex: number,
             ) => {
                 set(state => ({
-                    hymnDraft: {
-                        ...state.hymnDraft,
-                        verses: arrayMove(state.hymnDraft.verses, fromIndex, toIndex)
-                    }
+                    hymnDraft: withMovedVerse(state.hymnDraft, fromIndex, toIndex)
                 }));
             }
 
