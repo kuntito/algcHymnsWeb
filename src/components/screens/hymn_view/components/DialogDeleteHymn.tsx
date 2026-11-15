@@ -76,17 +76,18 @@ const DialogDeleteHymn = ({
                         h={"128px"}
                         justifyContent={"center"}
                         alignItems={"center"}
+                        gap={0}
                     >
                         <Text
                             fontWeight={"bold"}
                             fontSize={"16px"}
-                            color={"palette.holy"}
+                            color={"palette.life"}
                             textAlign={"center"}
                         >
                             {hymnTitle}
                         </Text>
                         <Text
-                            textStyle={"hush"}
+                            textStyle={"todd"}
                             color={"palette.memphis"}
                         >
                             this can't be undone.
