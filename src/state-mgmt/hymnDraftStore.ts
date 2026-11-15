@@ -4,7 +4,7 @@ import { withAppendedVerse, withMovedVerse, withTitle, withUpdatedVerse, without
 import { HymnDraft } from "./hymnDraftStore.types";
 
 
-const emptyHymnDraft: HymnDraft = {
+export const emptyHymnDraft: HymnDraft = {
     title: "",
     verses: [],
 };

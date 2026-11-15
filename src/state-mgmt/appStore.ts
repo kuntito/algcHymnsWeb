@@ -24,6 +24,10 @@ interface appStore {
     clearSearchQuery: () => void;
     deleteHymn: (hymnId: number) => Promise<boolean>;
     createHymn: (hymnDraft: HymnDraft) => Promise<boolean>;
+    updateHymn: (
+        hymnId: number,
+        hymnDraft: HymnDraft
+    ) => Promise<boolean>;
 }
 
 const useAppStore = create<appStore>((set, get) => {
@@ -156,6 +160,49 @@ const useAppStore = create<appStore>((set, get) => {
         return true;
     }
     
+    /**
+     * sends the edited draft to the server,
+     * then swaps the old hymn in the local list for the updated one.
+     *
+     * returns whether the hymn was updated.
+     */
+    const updateHymn = async (
+        hymnId: number,
+        hymnDraft: HymnDraft,
+    ): Promise<boolean> => {
+        const reqBody = draftToRequest(hymnDraft);
+
+        const res = await hymnsDataSource.updateHymn(
+            hymnId,
+            reqBody
+        );
+
+        const isUpdated = res != null && res.success;
+        if (!isUpdated) return false;
+
+        const current = get().fetchHymnsState;
+        const hasLoadedHymns = current.kind === "success";
+
+        if (hasLoadedHymns) {
+            const updatedHymns = current.hymns.map(hymn => {
+                const isTarget = hymn.id === hymnId;
+
+                if (isTarget) return res.hymn;
+
+                return hymn;
+            });
+
+            set({
+                fetchHymnsState: {
+                    kind: 'success',
+                    hymns: updatedHymns,
+                }
+            });
+        }
+
+        return true;
+    }
+
     return {
         fetchHymnsState: defaultFetchHymnsState,
         fetchHymns: getHymns,
@@ -165,6 +212,7 @@ const useAppStore = create<appStore>((set, get) => {
         clearSearchQuery,
         deleteHymn,
         createHymn,
+        updateHymn,
     }
 });
 

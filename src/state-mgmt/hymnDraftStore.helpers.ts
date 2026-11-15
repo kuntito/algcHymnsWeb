@@ -54,9 +54,9 @@ export const createVerseDraft = (
 const toVerseLines = (
     text: string
 ): string[] => {
-    const rawLines = text.split("\n");
+    const textLines = text.split("\n");
 
-    const cleanedLines = rawLines.map(removeExtraSpaces);
+    const cleanedLines = textLines.map(removeExtraSpaces);
 
     const nonEmptyLines = cleanedLines.filter(line => line !== "");
 
